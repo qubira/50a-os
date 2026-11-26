@@ -69,8 +69,8 @@ html = f'''<!doctype html>
 <meta name="robots" content="noindex">
 <meta property="og:title" content="{titulo}">
 <meta property="og:description" content="Viernes 11 de diciembre de 2026 · Elite Recepciones y Eventos, Puente Piedra">
-<meta property="og:image" content="https://mis50-murex.vercel.app/a/portada-og.jpg">
-<meta property="og:url" content="https://mis50-murex.vercel.app/">
+<meta property="og:image" content="https://los50derofelia.vercel.app/a/portada-og.jpg">
+<meta property="og:url" content="https://los50derofelia.vercel.app/">
 <meta property="og:type" content="website">
 {cabeza.strip()}
 </head>
