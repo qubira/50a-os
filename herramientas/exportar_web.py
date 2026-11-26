@@ -73,6 +73,7 @@ html = f'''<!doctype html>
 <meta property="og:url" content="https://los50derofelia.vercel.app/">
 <meta property="og:type" content="website">
 {cabeza.strip()}
+<style>#inicio{{height:calc(800px * var(--k, 1)) !important}}#inicio>div{{zoom:var(--k, 1)}}html,body{{overflow-x:hidden}}#app{{overflow-x:hidden;overflow-x:clip}}</style>
 </head>
 <body>
 <div id="app"></div>

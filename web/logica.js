@@ -57,7 +57,7 @@ class Component extends DCLogic {
     a.src = CONFIG.musica; a.loop = false; a.preload = 'auto'; a.volume = 0.8;
     a.addEventListener('play', () => this.setState({ sonando: true }));
     a.addEventListener('pause', () => this.setState({ sonando: false }));
-    a.addEventListener('ended', () => this.setState({ sonando: false }));
+    a.addEventListener('ended', () => { this.termino = true; this.setState({ sonando: false, termino: true }); });
     this.audioEl = a;
     this.gesto = () => this.sonar();
     this.eventos = ['pointerdown', 'pointerup', 'touchstart', 'touchend', 'mousedown', 'mouseup', 'click', 'keydown'];
@@ -66,10 +66,11 @@ class Component extends DCLogic {
   }
   sonar() {
     const a = this.audioEl;
-    if (!a || this.pausadaPorUsuario || !a.paused || a.ended) return;
+    // La canción arranca una sola vez: después de empezar, ningún toque la vuelve a iniciar.
+    if (!a || this.yaInicio || this.termino || this.pausadaPorUsuario || !a.paused) return;
     try {
       const pr = a.play();
-      const ok = () => { this.setState({ sonando: true }); this.eventos.forEach((ev) => document.removeEventListener(ev, this.gesto, { capture: true })); };
+      const ok = () => { this.yaInicio = true; this.setState({ sonando: true }); this.eventos.forEach((ev) => document.removeEventListener(ev, this.gesto, { capture: true })); };
       if (pr && pr.then) pr.then(ok).catch(() => {}); else ok();
     } catch (e) {}
   }
@@ -230,11 +231,26 @@ class Component extends DCLogic {
       gracias: esSi
         ? (cuantos > 1 ? 'Reservamos ' + cuantos + ' lugares para ustedes. ¡Los esperamos en el palacio!' : '¡Te esperamos en el palacio!')
         : 'Lamentamos que no puedas acompañarnos. ¡Gracias por avisar!',
-      tieneMusica: true,
+      tieneMusica: !s.termino,
       musicaLabel: s.sonando ? 'Pausar música' : 'Reproducir música',
-      alternarMusica: () => { const a = this.audioEl; if (!a) return; if (!a.paused) { a.pause(); this.pausadaPorUsuario = true; } else { if (a.ended) a.currentTime = 0; this.pausadaPorUsuario = false; a.play().catch(() => {}); } }
+      alternarMusica: () => { const a = this.audioEl; if (!a) return; if (!a.paused) { a.pause(); this.pausadaPorUsuario = true; } else if (!this.termino) { this.pausadaPorUsuario = false; a.play().catch(() => {}); } }
     };
   }
 }
 
-montarDC(Component, {}, document.getElementById('dc'), document.getElementById('app'));
+// La portada está dibujada a 420 × 800: se achica para que entre completa en el ancho y el alto del celular.
+(function () {
+  var ancho = 0;
+  function ajusta() {
+    if (window.innerWidth === ancho) return; // al esconderse la barra del navegador solo cambia el alto: no mover nada
+    ancho = window.innerWidth;
+    var w = Math.min(ancho, 480), h = window.innerHeight - 56;
+    var k = Math.min(1, w / 420, Math.max(h / 800, (w / 420) * 0.8));
+    document.documentElement.style.setProperty('--k', k.toFixed(4));
+  }
+  ajusta();
+  window.addEventListener('resize', ajusta);
+  window.addEventListener('orientationchange', function () { ancho = 0; setTimeout(ajusta, 300); });
+})();
+
+window.invitacion = montarDC(Component, {}, document.getElementById('dc'), document.getElementById('app'));

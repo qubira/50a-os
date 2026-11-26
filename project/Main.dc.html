@@ -356,10 +356,10 @@ class Component extends DCLogic {
   }
   sonar() {
     const a = this.audioEl;
-    if (!a || this.pausadaPorUsuario || !a.paused) return;
+    if (!a || this.yaInicio || a.ended || this.pausadaPorUsuario || !a.paused) return;
     try {
       const pr = a.play();
-      const ok = () => { this.setState({ sonando: true }); if (this.eventos) this.eventos.forEach((ev) => document.removeEventListener(ev, this.gesto, { capture: true })); };
+      const ok = () => { this.yaInicio = true; this.setState({ sonando: true }); if (this.eventos) this.eventos.forEach((ev) => document.removeEventListener(ev, this.gesto, { capture: true })); };
       if (pr && pr.then) pr.then(ok).catch(() => {}); else ok();
     } catch (e) {}
   }
