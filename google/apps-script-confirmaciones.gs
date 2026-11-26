@@ -27,8 +27,17 @@ function columna(hoja, encabezados, nombre, crear) {
   return c;
 }
 
+// La lista de invitados es la pestaña con gid=0 ("Hoja 1"), aunque haya otras pestañas antes (dashboard).
+function hojaInvitados() {
+  var libro = SpreadsheetApp.openById(ID_HOJA);
+  var hojas = libro.getSheets();
+  for (var i = 0; i < hojas.length; i++) if (hojas[i].getSheetId() === 0) return hojas[i];
+  for (var j = 0; j < hojas.length; j++) if (clave(hojas[j].getRange(1, 2).getValue()) === 'nombre') return hojas[j];
+  return hojas[0];
+}
+
 function guardar(datos) {
-  var hoja = SpreadsheetApp.openById(ID_HOJA).getSheets()[0];
+  var hoja = hojaInvitados();
   var valores = hoja.getDataRange().getValues();
   var encabezados = valores[0];
   for (var i = 1; i < valores.length; i++) {

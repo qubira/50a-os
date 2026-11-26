@@ -87,7 +87,7 @@ class Component extends DCLogic {
   }
   cargarHoja() {
     if (!this.state.qId) { this.setState({ cargado: true }); return; }
-    fetch('https://docs.google.com/spreadsheets/d/' + CONFIG.hoja + '/gviz/tq?tqx=out:csv&headers=1&_=' + Date.now())
+    fetch('https://docs.google.com/spreadsheets/d/' + CONFIG.hoja + '/gviz/tq?tqx=out:csv&headers=1&gid=0&_=' + Date.now())
       .then((r) => { if (!r.ok) throw new Error(r.status); return r.text(); })
       .then((t) => {
         const tabla = leerCSV(t);

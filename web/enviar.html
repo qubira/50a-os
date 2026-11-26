@@ -85,7 +85,7 @@ function pinta() {
     lista.appendChild(fila);
   });
 }
-fetch('https://docs.google.com/spreadsheets/d/' + HOJA + '/gviz/tq?tqx=out:csv&headers=1&_=' + Date.now())
+fetch('https://docs.google.com/spreadsheets/d/' + HOJA + '/gviz/tq?tqx=out:csv&headers=1&gid=0&_=' + Date.now())
   .then(function (r) { return r.text(); })
   .then(function (t) {
     invitados = leerCSV(t).slice(1).filter(function (x) { return (x[0] || '').trim() && (x[1] || '').trim(); }).map(function (x) {
