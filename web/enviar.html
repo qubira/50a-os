@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Enviar invitaciones</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--verde:#56663D;--oscuro:#2F3A22;--claro:#EEF4E2;--borde:#C9D9AE;--papel:#FBFAF3}
+*{box-sizing:border-box}
+body{margin:0;background:#E4EBD6 url(/a/86ca6db8fe728776d4360789e4caac66.jpg) 0 0/320px 320px;color:var(--oscuro);font:18px/1.4 'Cormorant Garamond',Georgia,serif}
+main{max-width:640px;margin:0 auto;padding:28px 16px 60px}
+h1{margin:0;font:600 20px Cinzel,serif;letter-spacing:2px;color:var(--verde)}
+p.sub{margin:6px 0 18px}
+label{display:block;font:600 11px Cinzel,serif;letter-spacing:1.5px;margin:14px 0 6px}
+textarea,input{width:100%;padding:10px 12px;border:1px solid var(--borde);border-radius:10px;background:var(--papel);font:inherit;color:inherit}
+textarea{min-height:110px;resize:vertical}
+small{display:block;margin-top:4px;color:#5C6649}
+.fila{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 14px;margin-top:8px;background:var(--papel);border:1px solid var(--borde);border-radius:12px}
+.fila .n{width:30px;color:#7A8468;font-size:15px}
+.fila .q{flex:1;min-width:55%}
+.fila .q b{display:block;font-weight:600}
+.fila .q span{font-size:15px;color:#5C6649}
+.btn{min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--verde);background:var(--verde);color:#F7F1E3;font:600 10px Cinzel,serif;letter-spacing:1px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;white-space:nowrap}
+.btn.sec{background:transparent;color:var(--verde)}
+.ok{background:#DCEBC9}
+#estado{margin-top:16px}
+</style>
+</head>
+<body>
+<main>
+<h1>ENVIAR INVITACIONES</h1>
+<p class="sub">Cada invitado tiene su propio enlace. Toca <b>WhatsApp</b> para mandárselo; si en la hoja falta su celular, WhatsApp te deja elegir el contacto.</p>
+<label for="msg">MENSAJE</label>
+<textarea id="msg">Hola {nombre} 💚 Con mucho cariño te invito a celebrar mis 50 años. Abre tu invitación aquí: {enlace}</textarea>
+<small>{nombre} y {enlace} se cambian solos por los de cada invitado.</small>
+<label for="pais">CÓDIGO DE PAÍS</label>
+<input id="pais" value="51" inputmode="numeric" style="max-width:120px">
+<div id="estado">Cargando la lista…</div>
+<div id="lista"></div>
+</main>
+<script>
+var HOJA = '1LUQ8exWlAte9zI2oxrd9SuNDqG85873wbvX_2Z-_9fc';
+function leerCSV(t) {
+  var filas = [], fila = [], campo = '', q = false;
+  for (var i = 0; i < t.length; i++) {
+    var c = t[i];
+    if (q) { if (c === '"') { if (t[i + 1] === '"') { campo += '"'; i++; } else q = false; } else campo += c; }
+    else if (c === '"') q = true;
+    else if (c === ',') { fila.push(campo); campo = ''; }
+    else if (c === '\n' || c === '\r') { if (c === '\r' && t[i + 1] === '\n') i++; fila.push(campo); filas.push(fila); fila = []; campo = ''; }
+    else campo += c;
+  }
+  if (campo || fila.length) { fila.push(campo); filas.push(fila); }
+  return filas;
+}
+function el(tag, attrs, hijos) {
+  var e = document.createElement(tag);
+  Object.keys(attrs || {}).forEach(function (k) { if (k === 'text') e.textContent = attrs[k]; else e.setAttribute(k, attrs[k]); });
+  (hijos || []).forEach(function (h) { e.appendChild(h); });
+  return e;
+}
+var invitados = [];
+function enlace(x) { return location.origin + '/i/' + encodeURIComponent(x.id); }
+function texto(x) { return document.getElementById('msg').value.split('{nombre}').join(x.nombre.split(/\s+/)[0]).split('{enlace}').join(enlace(x)); }
+function pinta() {
+  var lista = document.getElementById('lista');
+  lista.innerHTML = '';
+  var pais = document.getElementById('pais').value.replace(/\D/g, '');
+  invitados.forEach(function (x) {
+    var cel = x.celular.replace(/\D/g, '');
+    if (cel && cel.length <= 9) cel = pais + cel;
+    var wa = 'https://wa.me/' + (cel || '') + '?text=' + encodeURIComponent(texto(x));
+    var copiar = el('button', { class: 'btn sec', type: 'button', text: 'COPIAR' });
+    copiar.onclick = function () {
+      navigator.clipboard.writeText(texto(x)).then(function () { copiar.textContent = 'COPIADO ✓'; });
+    };
+    var fila = el('div', { class: 'fila' + (/^confirmad/i.test(x.estado) ? ' ok' : '') }, [
+      el('span', { class: 'n', text: x.id }),
+      el('div', { class: 'q' }, [el('b', { text: x.nombre }), el('span', { text: x.total + (x.total === 1 ? ' lugar' : ' lugares') + ' · ' + (x.estado || 'Sin respuesta') + (cel ? '' : ' · sin celular') })]),
+      copiar,
+      el('a', { class: 'btn', href: wa, target: '_blank', rel: 'noopener', text: 'WHATSAPP' })
+    ]);
+    lista.appendChild(fila);
+  });
+}
+fetch('https://docs.google.com/spreadsheets/d/' + HOJA + '/gviz/tq?tqx=out:csv&headers=1&_=' + Date.now())
+  .then(function (r) { return r.text(); })
+  .then(function (t) {
+    invitados = leerCSV(t).slice(1).filter(function (x) { return (x[0] || '').trim() && (x[1] || '').trim(); }).map(function (x) {
+      var ad = parseInt(x[2], 10) || 0;
+      return { id: x[0].trim(), nombre: x[1].trim(), total: parseInt(x[3], 10) || 1 + ad, estado: (x[5] || '').trim(), celular: (x[7] || '').trim() };
+    });
+    var si = invitados.filter(function (x) { return /^confirmad/i.test(x.estado); }).reduce(function (a, x) { return a + (parseInt((x.estado.match(/\d+/) || [])[0], 10) || x.total); }, 0);
+    document.getElementById('estado').textContent = invitados.length + ' invitaciones · ' + si + ' personas confirmadas';
+    pinta();
+  })
+  .catch(function () { document.getElementById('estado').textContent = 'No se pudo leer la hoja. Revisa que esté compartida como "Cualquier persona con el enlace".'; });
+document.getElementById('msg').addEventListener('input', pinta);
+document.getElementById('pais').addEventListener('input', pinta);
+</script>
+</body>
+</html>

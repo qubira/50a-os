@@ -1,0 +1,311 @@
+<title>El Baile de los Cincuenta</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:wght@400;500;700&family=Grenze+Gotisch:wght@500;600;700&family=IM+Fell+English:ital@0;1&display=swap">
+<style>
+/* Teatro de papel inglés: capas recortadas del verde pálido al verde noche; después, las hojas del cuento. */
+:root{
+  --noche:#12291a; --seto:#1f4128; --pacay:#4f7a35; --brote:#a9c67f; --pulpa:#f3f7ea; --hoja:#e2edcf;
+  --oro:#e3c478; --oro2:#7a5a14; --rosa:#d98a95; --tinta:#1b3020;
+  --titulo:"Grenze Gotisch","Old English Text MT",Georgia,serif;
+  --cuento:"IM Fell English",Georgia,serif;
+  --util:"Alegreya Sans","Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--pulpa);color:var(--tinta);font:19px/1.55 var(--cuento);overflow-x:hidden;font-variant-numeric:lining-nums}
+h1,h2,h3,p,ol,ul{margin:0;padding:0}
+ol,ul{list-style:none}
+h2{font:600 clamp(44px,11vw,72px)/.95 var(--titulo);text-wrap:balance}
+.in{max-width:680px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px))}
+.sec{padding-block:88px}
+.osc{background:var(--seto);color:var(--pulpa)}
+.claro{background:var(--hoja)}
+.centro{text-align:center}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:8px 28px;border:0;border-radius:4px;background:var(--oro);color:var(--noche);font:700 18px/1.2 var(--util);text-decoration:none;cursor:pointer;transition:transform .16s ease-out,background .2s}
+.btn:active{transform:scale(.97)}
+.btn.verde{background:var(--seto);color:var(--pulpa)}
+.btn.linea{background:none;color:inherit;box-shadow:inset 0 0 0 1.5px currentColor}
+@media(hover:hover){.btn:hover{background:#f1d998}.btn.verde:hover{background:var(--pacay)}.btn.linea:hover{background:#8882}}
+:focus-visible{outline:3px solid var(--rosa);outline-offset:3px}
+
+/* portada */
+.port{position:relative;min-height:max(740px,100svh);overflow:hidden;background:linear-gradient(#12291a 0,#2c5731 34%,#7fa658 60%,#d5e5ad 74%);color:var(--pulpa);display:flex;flex-direction:column;justify-content:space-between;text-align:center}
+.port>svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.port .rama{width:auto;height:100%;right:auto;pointer-events:none}
+.port .rama.d{left:auto;right:0;transform:scaleX(-1)}
+#luces{position:absolute;inset:0;pointer-events:none}.arriba,.abajo{position:relative}
+.arriba{padding-top:8svh;font-size:clamp(21px,5.4vw,28px);font-style:italic;line-height:1.25}
+.abajo{padding-bottom:36px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.port h1{font:600 clamp(54px,14vw,104px)/.9 var(--titulo);color:#fff}
+.fecha{font:500 20px var(--util);line-height:1.4}
+.abajo .btn{margin-top:8px}
+.capa{animation:sube 1.5s cubic-bezier(.16,1,.3,1) both}
+.c2{animation-delay:.12s}.c3{animation-delay:.24s}.c4{animation-delay:.36s}
+@keyframes sube{from{transform:translateY(46px)}}
+.luz{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff3b8;box-shadow:0 0 12px 4px #ffe98f88;animation:vuela 7s ease-in-out infinite alternate}
+@keyframes vuela{0%{transform:none;opacity:.15}50%{opacity:1}100%{transform:translate(34px,-60px);opacity:.25}}
+
+/* cuento */
+.cap{float:left;width:96px;height:96px;margin:6px 16px 4px 0;background:var(--seto);color:var(--oro);display:grid;place-items:center;font:600 78px/1 var(--titulo);box-shadow:inset 0 0 0 4px var(--seto),inset 0 0 0 5.5px var(--oro)}
+.relato{font-size:22px}
+.verso{margin-top:64px;font-style:italic;font-size:clamp(30px,7.6vw,44px);line-height:1.2;text-wrap:balance;color:var(--pacay)}
+.cita{margin-top:16px;font:500 17px var(--util)}
+
+/* reloj */
+.reloj{width:min(340px,100%);margin:36px auto 28px;display:block}
+.tres{display:grid;grid-template-columns:repeat(3,1fr);max-width:380px;margin:auto}
+.tres b{display:block;font:600 52px/1 var(--titulo);font-variant-numeric:lining-nums tabular-nums;color:var(--oro)}
+.tres span{font:500 17px var(--util)}
+
+/* retratos */
+.muro{display:grid;grid-template-columns:repeat(6,1fr);gap:22px 16px;margin-top:40px}
+.marco{position:relative;border:0;padding:0;cursor:pointer;background:var(--hoja) center/cover;color:var(--seto);font:500 16px/1.25 var(--util);border-radius:50%;box-shadow:0 0 0 3px var(--noche),0 0 0 10px #b88f3c,0 0 0 12px #f0d48d,0 10px 22px 8px #0f20164d;margin:12px;overflow:hidden;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
+.marco.g{grid-column:1/7;aspect-ratio:4/5;width:min(300px,82%);justify-self:center;font-size:18px}
+.marco.m{grid-column:span 3;aspect-ratio:4/5}
+.marco svg{width:44%}
+.marco.puesta>*{opacity:0}
+.marco:focus-visible{outline-offset:14px}
+
+/* programa */
+.prog{margin-top:40px;position:relative}
+.prog:before{content:"";position:absolute;left:21px;top:20px;bottom:40px;width:3px;background:var(--pacay)}
+.prog li{position:relative;padding:0 0 34px 68px}
+.prog li>svg{position:absolute;left:0;top:-2px;width:45px;height:45px}
+.prog time{font:700 18px var(--util);color:var(--pacay)}
+.prog h3{font:400 28px/1.1 var(--cuento);margin:1px 0 3px}
+.prog p{color:#3b5340}
+
+/* poste */
+.poste{position:relative;width:min(400px,100%);margin:44px auto 0;padding:24px 0 76px;display:grid;gap:16px}
+.poste:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:20px;margin-left:-10px;background:#0d2014;border-radius:10px 10px 0 0}
+.brazo{position:relative;background:var(--pulpa);color:var(--tinta);padding:16px 50px 16px 24px;clip-path:polygon(0 0,calc(100% - 34px) 0,100% 50%,calc(100% - 34px) 100%,0 100%);font-size:22px;line-height:1.25;text-align:left}
+.brazo.iz{clip-path:polygon(34px 0,100% 0,100% 100%,34px 100%,0 50%);padding:16px 24px 16px 50px;text-align:right;background:var(--brote)}
+.brazo span,[data-t=reserva],[data-t=limite],#lx{font-family:var(--util)}
+.brazo b{display:block;font:600 32px/1 var(--titulo)}
+
+/* etiqueta */
+.formal{font:600 clamp(84px,25vw,190px)/.8 var(--titulo);color:var(--seto);margin:12px 0 36px}
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:28px;text-align:left}
+.dos h3{font:400 italic 26px/1.2 var(--cuento);color:var(--pacay)}
+.nota{display:flex;align-items:center;gap:14px;margin-top:32px;text-align:left}
+.nota i{flex:none;width:46px;height:46px;border-radius:50%;background:var(--pacay)}
+
+/* regalos */
+.reg{margin-top:32px}
+.reg li{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;border-top:1.5px solid #4f7a3555}
+.reg h3{font:400 25px/1.15 var(--cuento)}
+.reg p{font:400 17px var(--util)}
+.reg .btn{min-height:46px;padding:6px 16px;font-size:16px;flex:none;min-width:108px}
+.reg .btn[aria-pressed=true]{background:var(--pacay);color:#fff;box-shadow:none}
+
+/* carta */
+.carta{position:relative;background:var(--pulpa);color:var(--tinta);margin-top:76px;padding:68px 24px 32px;border-radius:4px;box-shadow:0 18px 50px #0007}
+.carta:before{content:"";position:absolute;inset:8px;border:1.5px solid #b88f3c;pointer-events:none}
+.sello{position:absolute;left:50%;top:-46px;width:92px;margin-left:-46px}
+.fam{font:600 clamp(42px,11vw,62px)/1 var(--titulo);color:var(--seto);margin:4px 0 10px}
+.op{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:24px 0}
+fieldset{border:0;padding:0;margin:0;min-width:0}legend,label{font:700 18px var(--util);padding:0}
+.op label{display:block;position:relative}
+.op input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+.op span{display:grid;place-items:center;text-align:center;min-height:56px;padding:6px;border-radius:4px;box-shadow:inset 0 0 0 1.5px var(--pacay)}
+.op input:checked+span{background:var(--seto);color:#fff}
+.op input:focus-visible+span{outline:3px solid var(--rosa);outline-offset:2px}
+.cup{display:flex;align-items:center;justify-content:center;gap:14px;margin:12px 0 4px}
+.cup button{flex:none;width:52px;height:52px;border-radius:50%;border:0;background:var(--seto);color:#fff;font:500 28px/1 var(--util);cursor:pointer}
+.cup button:disabled{opacity:.3;cursor:default}
+.cup output{font:600 58px/1 var(--titulo);min-width:64px;font-variant-numeric:lining-nums}
+.sillas{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-bottom:24px}
+.sillas svg{width:34px;transition:opacity .2s,transform .25s}.sillas svg.no{opacity:.2;transform:scale(.8)}
+.campo{display:block;margin-bottom:20px;text-align:left}
+.campo input,.campo textarea{display:block;width:100%;margin-top:6px;padding:12px 14px;border:1.5px solid var(--pacay);border-radius:4px;background:#fff;color:var(--tinta);font:400 20px/1.4 var(--util)}
+.err{color:#9b2532;font:700 17px var(--util);margin:-12px 0 16px;text-align:left}
+.carta .btn{width:100%}
+.aviso{font:400 16px/1.4 var(--util);margin-top:12px}
+.listo{display:grid;gap:16px;margin-top:28px}
+.listo p:first-child{font:600 48px/1 var(--titulo);color:var(--pacay)}
+.fin{position:relative;background:var(--seto);color:var(--pulpa);text-align:center;padding-top:20px}
+.fin p{font:italic 30px/1.25 var(--cuento);padding-bottom:20px}
+.fin svg{display:block;width:100%;height:120px}
+@media(min-width:800px){.sec{padding-block:120px}.marco.g{grid-column:1/4;grid-row:1/3;width:100%;align-self:center}.marco.m{grid-column:span 1;aspect-ratio:4/5}.muro{grid-template-columns:3fr 1fr 0fr 0fr;max-width:900px}
+ .muro{grid-template-columns:1.5fr 1fr 1fr;gap:34px}.marco.g{grid-column:1}.carta{padding-inline:56px}.ancho{max-width:940px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+
+<header class="port">
+  <svg id="escena" viewBox="0 0 2400 900" preserveAspectRatio="xMidYMax slice" role="img" aria-label="Un castillo entre colinas bajo una luna con el número 50"></svg>
+  <svg class="rama" viewBox="0 0 200 900" aria-hidden="true"></svg><svg class="rama d" viewBox="0 0 200 900" aria-hidden="true"></svg>
+  <div id="luces" aria-hidden="true"></div>
+  <p class="arriba">Érase una vez,<br>hace cincuenta años…</p>
+  <div class="abajo in">
+    <h1 data-t="nombre"></h1>
+    <p class="fecha"><span data-t="dia"></span><br><span data-t="hora"></span></p>
+    <a class="btn" href="#asistencia">Confirmar asistencia</a>
+  </div>
+</header>
+
+<main>
+<section class="sec"><div class="in">
+  <p class="relato"><span class="cap" aria-hidden="true">N</span><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">N</span>ació una niña que, sin corona ni carroza, hizo de su casa un reino. Cincuenta años después, sus puertas se abren para un gran baile, y la reina quiere celebrarlo con quienes escribieron el cuento a su lado.</p>
+  <p class="verso">“Fortaleza y honor son su vestidura; y en el día postrero reirá.”</p>
+  <p class="cita">Proverbios 31:25, Reina-Valera 1909</p>
+</div></section>
+
+<section class="sec osc centro"><div class="in">
+  <h2>Faltan para el baile</h2>
+  <svg class="reloj" id="reloj" viewBox="0 0 340 340" role="img" aria-label="Días que faltan"></svg>
+  <div class="tres"><div><b id="h">00</b><span>horas</span></div><div><b id="m">00</b><span>minutos</span></div><div><b id="s">00</b><span>segundos</span></div></div>
+</div></section>
+
+<section class="sec claro"><div class="in ancho">
+  <h2 class="centro">Retratos de la reina</h2>
+  <div class="muro" id="muro"></div>
+  <input type="file" id="foto" accept="image/*" hidden>
+</div></section>
+
+<section class="sec"><div class="in">
+  <h2>El orden del baile</h2>
+  <ol class="prog" id="prog"></ol>
+</div></section>
+
+<section class="sec osc centro" style="padding-bottom:0"><div class="in">
+  <h2>El camino al palacio</h2>
+  <div class="poste">
+    <p class="brazo"><b data-t="local"></b><span data-t="direccion"></span></p>
+    <p class="brazo iz"><span data-t="dia"></span><br><span data-t="hora"></span></p>
+    <p class="brazo" style="padding:0;background:var(--oro)"><a id="mapa" target="_blank" rel="noopener" style="display:block;padding:18px 50px 18px 24px;color:var(--noche);font:700 20px var(--util);text-decoration:none">Abrir en Google Maps</a></p>
+  </div>
+</div></section>
+
+<section class="sec centro"><div class="in">
+  <h2 style="font:italic 30px/1.2 var(--cuento)">La corte viste de</h2>
+  <p class="formal">Formal</p>
+  <div class="dos"><div><h3>Damas</h3><p>Vestido largo de gala</p></div><div><h3>Caballeros</h3><p>Terno oscuro y corbata</p></div></div>
+  <p class="nota"><i aria-hidden="true"></i><span>El verde pacay queda reservado para la reina de la noche.</span></p>
+</div></section>
+
+<section class="sec claro"><div class="in">
+  <h2>Regalos para la reina</h2>
+  <p style="margin-top:14px">Tu presencia es lo más esperado. Si además quieres traer un obsequio, estos son sus preferidos.</p>
+  <ul class="reg" id="reg"></ul>
+</div></section>
+
+<section class="sec osc" id="asistencia"><div class="in centro">
+  <h2>¿Vendrán al baile?</h2>
+  <p style="margin-top:14px">Esperamos su respuesta hasta el <span data-t="limite"></span>.</p>
+  <div class="carta">
+    <svg class="sello" viewBox="0 0 100 100" aria-hidden="true"></svg>
+    <p>Invitación para la</p>
+    <p class="fam">Familia <span data-t="familia"></span></p>
+    <p data-t="reserva"></p>
+    <form id="f" novalidate>
+      <fieldset><legend style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Asistencia</legend><div class="op">
+        <label><input type="radio" id="si" name="a" value="si" checked><span>Sí, iremos</span></label>
+        <label><input type="radio" id="no" name="a" value="no"><span>No podremos ir</span></label>
+      </div></fieldset>
+      <div id="cuantos"><p style="font:700 18px var(--util)" id="lc">¿Cuántas personas vendrán?</p>
+        <div class="cup"><button type="button" id="menos" aria-label="Una persona menos">−</button><output id="n" aria-labelledby="lc"></output><button type="button" id="mas" aria-label="Una persona más">+</button></div>
+        <div class="sillas" id="sillas" aria-hidden="true"></div></div>
+      <label class="campo" for="quien">Nombre de quien confirma<input id="quien" autocomplete="name" aria-describedby="err"></label>
+      <p class="err" id="err" role="alert" hidden>Escribe tu nombre para confirmar.</p>
+      <label class="campo" for="msj">Mensaje para la cumpleañera (opcional)<textarea id="msj" rows="3"></textarea></label>
+      <button class="btn verde" id="enviar">Confirmar asistencia</button>
+    </form>
+    <div class="listo" id="listo" hidden tabindex="-1">
+      <p id="lt"></p><p id="lx"></p>
+      <a class="btn verde" id="wa" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+      <button class="btn linea" id="edit" type="button">Cambiar respuesta</button>
+      <p class="aviso">Tu respuesta llega a la anfitriona cuando pulses Enviar dentro de WhatsApp.</p>
+    </div>
+  </div>
+</div></section>
+</main>
+<footer class="fin"><p class="in">Y bailaron felices<br>hasta el amanecer.</p><svg id="setoFin" viewBox="0 0 1200 120" preserveAspectRatio="xMidYMax slice" aria-hidden="true"></svg></footer>
+
+<script>
+/* ====== DATOS DE LA FIESTA: cambia solo esto ====== */
+const FIESTA={
+  nombre:'María Elena', fecha:'2027-01-16T20:00:00-05:00',
+  local:'Nombre del local', direccion:'Dirección y distrito', mapa:'Lima, Perú',
+  whatsapp:'',                        // Ej. '51999999999'. Vacío: el invitado elige el contacto
+  retratos:['Su retrato principal','Infancia','Juventud','En familia','Hoy'],
+  fotos:[],                           // Ej. ['fotos/1.jpg','fotos/2.jpg']
+  programa:[['8:00 p. m.','Llegada de los invitados','Bienvenida y cóctel'],['8:45 p. m.','Entrada de la reina','Palabras y brindis'],['9:30 p. m.','Banquete','Cena en el gran salón'],['10:30 p. m.','Vals','La cumpleañera abre el baile'],['12:00 a. m.','La torta','Canto y velas a medianoche'],['1:00 a. m.','Hora loca','A bailar hasta el final']],
+  regalos:[['Lluvia de sobres','Se reciben en la entrada'],['Perfume','Aromas florales o frescos'],['Día de spa','Masajes o tratamiento facial'],['Para el hogar','Copas, vajilla o mantelería']],
+  invitados:{                         // enlace de cada familia: …#perez-garcia
+    'perez-garcia':['Pérez García',4],'rojas-luna':['Rojas Luna',2],'torres-vega':['Torres Vega',6]}
+};
+/* ================================================== */
+const $=q=>document.querySelector(q),$$=q=>[...document.querySelectorAll(q)];
+let sem=7;const R=()=>(sem=(sem*16807)%2147483647)/2147483647;
+const rosa=(x,y,r,a='#d98a95',b='#f6d9d5')=>{let o='';for(const[k,c,q]of[[1,a,0],[.6,b,36]])for(let i=0;i<5;i++){const t=(i*72+q-90)*Math.PI/180;o+=`<circle cx="${x+Math.cos(t)*r*.52*k}" cy="${y+Math.sin(t)*r*.52*k}" r="${r*.48*k}" fill="${c}"/>`}return o+`<circle cx="${x}" cy="${y}" r="${r*.2}" fill="#e3c478"/>`};
+const hoja=(x,y,l,a,c)=>`<path transform="translate(${x} ${y}) rotate(${a})" d="M0 0C${l*.3} ${-l*.36} ${l*.75} ${-l*.3} ${l} 0C${l*.75} ${l*.3} ${l*.3} ${l*.36} 0 0" fill="${c}"/>`;
+/* castillo */
+const torre=(x,b,w,h,t,c,v)=>{const y=b-h;let o=`<rect x="${x-w/2}" y="${y}" width="${w}" height="${h+30}" fill="${c}"/>`;
+ if(t)o+=`<path d="M${x-w/2-6} ${y}L${x} ${y-t}L${x+w/2+6} ${y}z" fill="${c}"/><path d="M${x} ${y-t-20}v22" stroke="${c}" stroke-width="2"/><path d="M${x} ${y-t-20}l18 6-18 6z" fill="#d98a95"/>`;
+ else{o+=`<rect x="${x-w/2-5}" y="${y-8}" width="${w+10}" height="12" fill="${c}"/>`;const k=Math.round(w/14);for(let i=0;i<=k;i++)o+=`<rect x="${x-w/2-5+i*(w+2)/k}" y="${y-18}" width="8" height="12" fill="${c}"/>`}
+ for(const[vx,vy]of v)o+=`<path transform="translate(${x+vx} ${y+vy})" d="M-4 14V4a4 4 0 0 1 8 0V14z" fill="#ffe9a3"/>`;return o};
+const colina=(y,a,n,c,f)=>{let d=`M0 900V${y}`;for(let x=0;x<=2400;x+=20)d+=`L${x} ${y+Math.sin(x/n+f)*a+Math.sin(x/(n*.37)+f)*a*.3}`;return`<path d="${d}V900z" fill="${c}"/>`};
+const arbol=(x,y,s,c)=>{let o=`<rect x="${x-2}" y="${y-s*.4}" width="4" height="${s*.5}" fill="${c}"/>`;for(let i=0;i<6;i++)o+=`<circle cx="${x+(R()-.5)*s*.6}" cy="${y-s*.55-R()*s*.45}" r="${s*.26}" fill="${c}"/>`;return o};
+const bosque=(n,y,s,c)=>{let o='';for(let i=0;i<n;i++){const x=R()*2400;if(Math.abs(x-1200)<190)continue;o+=arbol(x,y+R()*30,s*(.6+R()*.7),c)}return o};
+let est='';for(let i=0;i<110;i++)est+=`<circle cx="${R()*2400}" cy="${R()*360}" r="${.6+R()*1.5}" fill="#f3f7ea" opacity="${.3+R()*.6}"/>`;
+const C='#2b5733',C2='#3a6b3c';
+$('#escena').innerHTML=est+`<defs><radialGradient id="hl"><stop offset=".5" stop-color="#f5f3c4" stop-opacity=".5"/><stop offset="1" stop-color="#f5f3c4" stop-opacity="0"/></radialGradient><filter id="sm" x="-5%" y="-20%" width="110%" height="140%"><feDropShadow dx="0" dy="-5" stdDeviation="7" flood-color="#0b1c10" flood-opacity=".38"/></filter></defs>
+<circle cx="1200" cy="285" r="250" fill="url(#hl)"/><circle cx="1200" cy="285" r="146" fill="#f4f3d2"/><circle cx="1200" cy="285" r="137" fill="none" stroke="#b88f3c" stroke-width="1.5"/>
+<text x="1200" y="336" text-anchor="middle" font-family="Grenze Gotisch,Georgia,serif" font-weight="600" font-size="200" style="font-variant-numeric:lining-nums" fill="#2b5733">50</text>
+<g class="capa"><g filter="url(#sm)">${colina(600,34,170,'#9dbf6c',1)}</g>${bosque(26,590,60,'#9dbf6c')}</g>
+<g class="capa c2"><g filter="url(#sm)">${torre(1150,640,54,190,56,C2,[[0,40]])+torre(1252,640,50,160,60,C2,[[0,40]])+torre(1204,640,62,214,40,C,[[-13,36],[13,36],[0,80]])+torre(1096,640,40,130,54,C,[[0,36]])+torre(1304,640,42,112,50,C,[[0,36]])+torre(1170,640,130,96,0,C2,[[-40,34],[0,34]])+torre(1246,640,110,78,0,C,[[22,30]])+torre(1066,640,50,62,0,C2,[[0,24]])+torre(1338,640,54,54,0,C2,[[0,22]])}<path d="M1184 670v-40a22 22 0 0 1 44 0v40z" fill="#ffe9a3"/></g></g>
+<g class="capa c3"><g filter="url(#sm)">${colina(660,20,140,'#356338',2.6)}</g>${bosque(34,650,84,'#356338')}<path d="M1192 650C1180 690 1260 700 1228 760S1170 830 1210 900h90c-70-60 10-100 12-150s-104-50-92-100z" fill="#c8dc9c" opacity=".35"/></g>
+<g class="capa c4"><g filter="url(#sm)">${colina(708,16,200,'#12291a',4.3)}</g>${bosque(22,720,120,'#12291a')}</g>`;
+/* rosal */
+let rama='<path d="M14 900C40 760-6 640 18 500S0 250 26 140C40 70 100 20 200 -6" fill="none" stroke="#0c1f12" stroke-width="7"/>';
+const tmp=document.createElementNS('http://www.w3.org/2000/svg','path');tmp.setAttribute('d','M14 900C40 760-6 640 18 500S0 250 26 140C40 70 100 20 200 -6');
+const L=tmp.getTotalLength();for(let i=0;i<74;i++){const p=tmp.getPointAtLength(L*i/74),q=tmp.getPointAtLength(L*i/74+2),g=Math.atan2(q.y-p.y,q.x-p.x)*57.3;rama+=hoja(p.x,p.y,26+R()*20,g+(i%2?52:-52)+R()*20-10,['#0c1f12','#1b3c22','#2f5a2f'][i%3])}
+for(const[k,r]of[[.1,17],[.24,13],[.4,19],[.55,14],[.68,20],[.76,13],[.84,23],[.93,16]]){const p=tmp.getPointAtLength(L*k);rama+=rosa(p.x+8,p.y+4,r)}
+$$('.rama').forEach(e=>e.innerHTML=rama);
+let lz='';for(let i=0;i<16;i++)lz+=`<i class="luz" style="left:${8+R()*84}%;top:${48+R()*40}%;animation-delay:${-R()*7}s;animation-duration:${5+R()*5}s"></i>`;$('#luces').innerHTML=lz;
+let sf='';for(let i=0;i<120;i++)sf+=`<circle cx="${R()*1200}" cy="${88+R()*40}" r="${22+R()*22}" fill="#12291a"/>`;for(let i=0;i<26;i++)sf+=rosa(i*47+R()*20,70+R()*40,9+R()*6);$('#setoFin').innerHTML=sf;
+
+/* datos */
+const F=new Date(FIESTA.fecha),Z={timeZone:'America/Lima'},fm=(o,d=F)=>new Intl.DateTimeFormat('es-PE',{...Z,...o}).format(d);
+let dia=fm({weekday:'long',day:'numeric',month:'long',year:'numeric'});dia=dia[0].toUpperCase()+dia.slice(1);
+let familia,cupos,n;
+const K='baile50:',lee=(k,d)=>{try{return JSON.parse(localStorage.getItem(K+k))??d}catch{return d}},pon=(k,v)=>{try{localStorage.setItem(K+k,JSON.stringify(v))}catch{}};
+const pers=x=>x+(x===1?' persona':' personas');
+let clave='perez-garcia';
+function invitado(){const h=location.hash.slice(1),q=new URLSearchParams(location.search).get('familia');const c=FIESTA.invitados[h]?h:FIESTA.invitados[q]?q:clave;clave=c;[familia,cupos]=FIESTA.invitados[c];n=cupos;
+ const T={nombre:FIESTA.nombre,dia,hora:fm({hour:'numeric',minute:'2-digit',hour12:true}),limite:fm({day:'numeric',month:'long'},new Date(F-7*864e5)),local:FIESTA.local,direccion:FIESTA.direccion,familia,reserva:'Hemos reservado lugar para '+pers(cupos)+'.'};
+ $$('[data-t]').forEach(e=>e.textContent=T[e.dataset.t]);pinta()}
+$('#mapa').href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(FIESTA.mapa);
+/* reloj */
+const NS='I II III IV V VI VII VIII IX X XI XII'.split(' ');let rl='<circle cx="170" cy="170" r="164" fill="#12291a" stroke="#e3c478" stroke-width="2"/><circle cx="170" cy="170" r="120" fill="none" stroke="#e3c478" stroke-width="1"/>';
+NS.forEach((t,i)=>{const a=(i+1)*30;rl+=`<text transform="rotate(${a} 170 170)" x="170" y="40" text-anchor="middle" font-family="IM Fell English,serif" font-size="25" fill="#e3c478">${t}</text>`});
+for(let i=0;i<60;i++)rl+=`<path transform="rotate(${i*6} 170 170)" d="M170 50v${i%5?5:9}" stroke="#a9c67f" stroke-width="1.5"/>`;
+rl+='<g id="aguja"><path d="M170 62l7 12-7 12-7-12z" fill="#d98a95"/></g><text id="d" x="170" y="192" text-anchor="middle" font-family="Grenze Gotisch,serif" font-weight="600" font-size="100" style="font-variant-numeric:lining-nums" fill="#f3f7ea"></text><text id="dl" x="170" y="228" text-anchor="middle" font-family="IM Fell English,serif" font-style="italic" font-size="28" fill="#f3f7ea"></text>';$('#reloj').innerHTML=rl;
+function tic(){const t=Math.max(0,F-Date.now())/1e3|0,p=x=>String(x).padStart(2,'0'),d=t/86400|0;$('#d').textContent=t?d:'¡Hoy!';$('#dl').textContent=t?(d===1?'día':'días'):'es el baile';$('#reloj').setAttribute('aria-label',t?'Faltan '+d+' días':'Hoy es el baile');$('#h').textContent=p(t/3600%24|0);$('#m').textContent=p(t/60%60|0);$('#s').textContent=p(t%60);$('#aguja').setAttribute('transform','rotate('+(60-t%60)*6+' 170 170)')}
+tic();setInterval(tic,1000);
+/* retratos */
+const RS=`<svg viewBox="0 0 100 100" aria-hidden="true">${rosa(50,50,46,'#a9c67f','#f3f7ea')}</svg>`;
+$('#muro').innerHTML=FIESTA.retratos.map((t,i)=>`<button type="button" class="marco ${i?'m':'g'}" data-i="${i}" aria-label="Agregar foto: ${t}">${RS}<span>${t}</span></button>`).join('');
+let cual=0;const ver=(i,u)=>{const b=$$('.marco')[i];if(!b||!u)return;b.style.backgroundImage=`url("${u}")`;b.classList.add('puesta')};
+FIESTA.retratos.forEach((_,i)=>ver(i,FIESTA.fotos[i]||lee('foto'+i)));
+$$('.marco').forEach(b=>b.onclick=()=>{cual=+b.dataset.i;$('#foto').click()});
+$('#foto').onchange=e=>{const a=e.target.files[0],i=cual;if(!a)return;const r=new FileReader;r.onload=()=>{const im=new Image;im.onload=()=>{const k=Math.min(1,900/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);const u=c.toDataURL('image/jpeg',.82);ver(i,u);pon('foto'+i,u)};im.src=r.result};r.readAsDataURL(a);e.target.value=''};
+/* listas */
+$('#prog').innerHTML=FIESTA.programa.map(p=>`<li><svg viewBox="0 0 45 45" aria-hidden="true">${hoja(10,36,20,130,'#4f7a35')+hoja(34,36,20,50,'#4f7a35')+rosa(22.5,22,19)}</svg><time>${p[0]}</time><h3>${p[1]}</h3><p>${p[2]}</p></li>`).join('');
+let reg=lee('reg',[]);
+$('#reg').innerHTML=FIESTA.regalos.map((g,i)=>`<li><div><h3>${g[0]}</h3><p>${g[1]}</p></div><button type="button" class="btn linea" data-g="${i}" aria-label="Lo llevo: ${g[0]}"></button></li>`).join('');
+const pr=()=>$$('[data-g]').forEach(b=>{const o=reg.includes(+b.dataset.g);b.setAttribute('aria-pressed',o);b.textContent=o?'Lo llevaré':'Lo llevo'});pr();
+$('#reg').onclick=e=>{const b=e.target.closest('[data-g]');if(!b)return;const i=+b.dataset.g;reg=reg.includes(i)?reg.filter(x=>x!==i):[...reg,i];pon('reg',reg);pr()};
+/* asistencia */
+$('.sello').innerHTML='<path d="M50 2c10 0 14 5 23 8s17 8 20 18-1 14 3 23 0 18-9 25-10 14-21 18-17-2-27 1-19-3-26-11-5-15-9-24S0 42 6 33s11-12 18-20S39 2 50 2" fill="#8c2436"/><circle cx="50" cy="50" r="35" fill="none" stroke="#b64b5a" stroke-width="3"/><path d="M28 65l-6-30 15 13 13-22 13 22 15-13-6 30z" fill="#e9a5a8"/>';
+function pinta(){$('#n').textContent=n;$('#menos').disabled=n<=1;$('#mas').disabled=n>=cupos;$('#sillas').innerHTML=Array.from({length:cupos},(_,i)=>`<svg class="${i<n?'':'no'}" viewBox="0 0 100 100">${rosa(50,50,46)}</svg>`).join('')}
+$('#menos').onclick=()=>{n--;pinta()};$('#mas').onclick=()=>{n++;pinta()};
+const va=()=>$('#si').checked;$$('[name=a]').forEach(r=>r.onchange=()=>{$('#cuantos').hidden=!va();$('#enviar').textContent=va()?'Confirmar asistencia':'Enviar respuesta'});
+$('#quien').oninput=()=>{$('#err').hidden=true;$('#quien').removeAttribute('aria-invalid')};
+$('#f').onsubmit=e=>{e.preventDefault();const q=$('#quien').value.trim();if(!q){$('#err').hidden=false;$('#quien').setAttribute('aria-invalid','true');$('#quien').focus();return}
+ $('#err').hidden=true;const m=$('#msj').value.trim(),g=reg.map(i=>FIESTA.regalos[i][0]).join(', ');
+ const t=`Familia ${familia}: `+(va()?`confirmamos ${pers(n)} de ${cupos} para los 50 años de ${FIESTA.nombre}.`:`no podremos ir a los 50 años de ${FIESTA.nombre}.`)+` Responde: ${q}.`+(va()&&g?` Regalo: ${g}.`:'')+(m?` Mensaje: ${m}`:'');
+ $('#wa').href='https://wa.me/'+FIESTA.whatsapp+'?text='+encodeURIComponent(t);$('#lt').textContent='Un último paso, '+q.split(' ')[0];$('#lx').textContent=t;$('#f').hidden=true;$('#listo').hidden=false;$('#listo').focus()};
+$('#edit').onclick=()=>{$('#listo').hidden=true;$('#f').hidden=false;$('#quien').focus()};
+invitado();addEventListener('hashchange',()=>{if(FIESTA.invitados[location.hash.slice(1)]){$('#listo').hidden=true;$('#f').hidden=false;invitado()}});
+</script>
