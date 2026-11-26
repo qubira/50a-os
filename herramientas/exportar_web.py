@@ -2,6 +2,7 @@
 Uso (desde la carpeta del proyecto): python herramientas/exportar_web.py
 La lógica de la versión web está en web/logica.js y el motor en web/dc.js.
 """
+import hashlib
 import os
 import re
 
@@ -28,7 +29,11 @@ archivos = {os.path.splitext(f)[0]: f for f in os.listdir(carpeta)}
 
 
 def blob(m):
-    return '/a/' + archivos[m.group(1)]
+    # ?v=<huella del archivo>: si se reemplaza una foto con el mismo nombre, el celular baja la nueva
+    # (Vercel guarda /a/* en caché por un año).
+    nombre = archivos[m.group(1)]
+    huella = hashlib.md5(open(os.path.join(carpeta, nombre), 'rb').read()).hexdigest()[:8]
+    return '/a/' + nombre + '?v=' + huella
 
 
 cabeza = re.sub(r'/_blob/([0-9a-f]{32})', blob, cabeza)
