@@ -68,6 +68,7 @@ Edita `project/Main.dc.html` y publícalo con la herramienta Artifact:
 - `web/dc.js` = motor mínimo que entiende el formato DC; `web/logica.js` = lógica de la versión web (editar a mano).
 - Invitación personal: `/i/<N.º>` (columna A de la hoja). Hoja: A N.º · B Nombre · C Adicionales · D Total de personas ·
   E Modalidad · F Confirmación · G Observaciones · H celular. La respuesta escribe "Confirmado – N personas" / "No asistirá"
-  en F, más las columnas "Regalo" y "Respondió el" (el Apps Script las crea si faltan).
+  en F y "Respondió el". El regalo se manda aparte apenas tocan "Lo regalo" ({tipo: "regalo"}) y va a las columnas
+  "Regalo" y "Regalo elegido el" (el Apps Script las crea si faltan). Al abrir, la invitación muestra el regalo ya elegido.
 - `/enviar` = lista de invitados con botón de WhatsApp y su enlace personal.
 - Probar en local: `python herramientas/servidor_local.py` → http://localhost:8940/i/1

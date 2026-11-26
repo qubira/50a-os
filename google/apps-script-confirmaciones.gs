@@ -31,17 +31,19 @@ function guardar(datos) {
   var hoja = SpreadsheetApp.openById(ID_HOJA).getSheets()[0];
   var valores = hoja.getDataRange().getValues();
   var encabezados = valores[0];
-  var colConf = columna(hoja, encabezados, 'Confirmación', true);
-  var colRegalo = columna(hoja, encabezados, 'Regalo', true);
-  var colFecha = columna(hoja, encabezados, 'Respondió el', true);
   for (var i = 1; i < valores.length; i++) {
     var mismoId = datos.id != null && String(valores[i][0]).trim() === String(datos.id).trim();
     if (!mismoId || clave(valores[i][1]) !== clave(datos.nombre)) continue;
+    if (datos.tipo === 'regalo') {
+      // El regalo llega aparte, apenas el invitado toca "Lo regalo" (no depende de la confirmación).
+      hoja.getRange(i + 1, columna(hoja, encabezados, 'Regalo', true)).setValue(datos.regalo || '');
+      hoja.getRange(i + 1, columna(hoja, hoja.getRange(1, 1, 1, hoja.getLastColumn()).getValues()[0], 'Regalo elegido el', true)).setValue(new Date());
+      return;
+    }
     var n = Number(datos.personas) || 0;
     var texto = datos.asiste ? 'Confirmado – ' + n + (n === 1 ? ' persona' : ' personas') : 'No asistirá';
-    hoja.getRange(i + 1, colConf).setValue(texto);
-    hoja.getRange(i + 1, colRegalo).setValue(datos.regalo || '');
-    hoja.getRange(i + 1, colFecha).setValue(new Date());
+    hoja.getRange(i + 1, columna(hoja, encabezados, 'Confirmación', true)).setValue(texto);
+    hoja.getRange(i + 1, columna(hoja, hoja.getRange(1, 1, 1, hoja.getLastColumn()).getValues()[0], 'Respondió el', true)).setValue(new Date());
     return;
   }
 }
@@ -49,5 +51,6 @@ function guardar(datos) {
 // Para probar desde el editor: elige "probar" en la lista y pulsa Ejecutar.
 // Escribe en la fila N.º 1 (cámbialo si quieres) y luego vuelve a poner "Pendiente de confirmar" a mano.
 function probar() {
-  guardar({ id: '1', nombre: 'Rosella', asiste: true, personas: 1, regalo: 'Perfume' });
+  guardar({ id: '1', nombre: 'Rosella', asiste: true, personas: 1 });
+  guardar({ tipo: 'regalo', id: '1', nombre: 'Rosella', regalo: 'Perfume' });
 }

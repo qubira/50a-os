@@ -34,7 +34,7 @@ function leerCSV(t) {
 class Component extends DCLogic {
   constructor(p) {
     super(p);
-    this.state = { puerta: 'cerrada', reservados: {}, asiste: 'si', cuantos: null, invitado: null, cargado: false, hojaError: false, enviado: false, error: false, sonando: false, qId: idDelEnlace() };
+    this.state = { puerta: 'cerrada', reservados: null, regaloHoja: '', asiste: 'si', cuantos: null, invitado: null, cargado: false, hojaError: false, enviado: false, error: false, sonando: false, qId: idDelEnlace() };
   }
   componentDidMount() {
     this.t = setInterval(() => this.forceUpdate(), 1000);
@@ -74,17 +74,30 @@ class Component extends DCLogic {
       if (pr && pr.then) pr.then(ok).catch(() => {}); else ok();
     } catch (e) {}
   }
+  // El regalo se guarda en la hoja apenas lo marcan (sin esperar la confirmación). Si tocan varios seguidos, se manda una vez.
+  guardarRegalo(reservados, catalogo) {
+    const inv = this.state.invitado;
+    if (!inv) return;
+    clearTimeout(this.tRegalo);
+    this.tRegalo = setTimeout(() => {
+      const regalo = catalogo.filter((r) => reservados[r.id]).map((r) => r.nombre).join(', ');
+      fetch(CONFIG.urlRespuestas, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ tipo: 'regalo', id: inv.id, nombre: inv.nombre, regalo: regalo }) }).catch(() => {});
+    }, 1200);
+  }
   cargarHoja() {
     if (!this.state.qId) { this.setState({ cargado: true }); return; }
     fetch('https://docs.google.com/spreadsheets/d/' + CONFIG.hoja + '/gviz/tq?tqx=out:csv&headers=1&_=' + Date.now())
       .then((r) => { if (!r.ok) throw new Error(r.status); return r.text(); })
       .then((t) => {
-        const fila = leerCSV(t).slice(1).find((x) => String(x[0] || '').trim() === String(this.state.qId).trim() && String(x[1] || '').trim());
+        const tabla = leerCSV(t);
+        const colRegalo = (tabla[0] || []).findIndex((h) => String(h).normalize('NFD').replace(/[̀-ͯ]/g, '').trim().toLowerCase() === 'regalo');
+        const fila = tabla.slice(1).find((x) => String(x[0] || '').trim() === String(this.state.qId).trim() && String(x[1] || '').trim());
         if (!fila) { this.setState({ cargado: true, invitado: null }); return; }
         const adicionales = parseInt(fila[2], 10) || 0;
         const total = Math.max(1, parseInt(fila[3], 10) || (1 + adicionales));
         const inv = { id: String(fila[0]).trim(), nombre: String(fila[1]).trim(), total: total, confirmo: String(fila[5] || '').trim() };
-        const cambio = { cargado: true, hojaError: false, invitado: inv, cuantos: total };
+        const cambio = { cargado: true, hojaError: false, invitado: inv, cuantos: total, regaloHoja: colRegalo >= 0 ? String(fila[colRegalo] || '') : '' };
         // Si ya respondió antes, muestra su respuesta (y deja modificarla).
         if (/^confirmad/i.test(inv.confirmo)) { const n = parseInt((inv.confirmo.match(/\d+/) || [])[0], 10); Object.assign(cambio, { enviado: true, asiste: 'si', cuantos: n || total }); }
         else if (/^no\b/i.test(inv.confirmo)) Object.assign(cambio, { enviado: true, asiste: 'no' });
@@ -131,7 +144,7 @@ class Component extends DCLogic {
       chispas.push({ style: 'left: ' + ((i * 29 + 11) % 100) + '%; width: ' + size + 'px; height: ' + size + 'px; animation-duration: ' + (7 + (i * 13) % 7) + 's; animation-delay: ' + (-((i * 11) % 9)) + 's; opacity: 0.8' });
     }
     const btnBase = 'min-height: 44px; padding: 0 16px; border-radius: 999px; font-family: Cinzel, serif; font-size: 10px; letter-spacing: 1.5px; cursor: pointer; white-space: nowrap; ';
-    const regalos = [
+    const catalogo = [
       { id: 'sobres', nombre: 'Lluvia de sobres', detalle: 'Se recibirán en la recepción' },
       { id: 'joyas', nombre: 'Joyas y accesorios', detalle: 'Aretes, collar, pulsera o reloj' },
       { id: 'perfume', nombre: 'Perfume', detalle: 'Aromas florales o frescos' },
@@ -143,11 +156,13 @@ class Component extends DCLogic {
       { id: 'flores', nombre: 'Flores y plantas', detalle: 'Orquídeas o un arreglo floral' },
       { id: 'cocina', nombre: 'Para la cocina', detalle: 'Cafetera, freidora de aire o licuadora' },
       { id: 'hogar', nombre: 'Tesoros para el hogar', detalle: 'Juego de copas, vajilla o mantelería' }
-    ].map((r, i) => {
-      const on = !!s.reservados[r.id];
+    ];
+    const reservados = s.reservados || Object.fromEntries(catalogo.filter((r) => s.regaloHoja && s.regaloHoja.split(/\s*,\s*/).indexOf(r.nombre) >= 0).map((r) => [r.id, true]));
+    const regalos = catalogo.map((r, i) => {
+      const on = !!reservados[r.id];
       return Object.assign({}, r, { clase: i % 2 ? 'rev-der' : 'rev-izq', reservado: on ? 'true' : 'false', btnTexto: on ? 'RESERVADO ✓' : 'LO REGALO',
         btnStyle: btnBase + (on ? 'border: 1px solid #56663D; background: #56663D; color: #F7F1E3;' : 'border: 1px solid #A9C084; background: #EEF4E2; color: #3F5226;'),
-        pick: () => this.setState({ reservados: Object.assign({}, s.reservados, { [r.id]: !on }) }) });
+        pick: () => { const nuevos = Object.assign({}, reservados, { [r.id]: !on }); this.setState({ reservados: nuevos }); this.guardarRegalo(nuevos, catalogo); } });
     });
     const opt = (on) => 'min-height: 50px; border-radius: 10px; font-size: 18px; font-weight: 600; cursor: pointer; ' + (on ? 'border: 1px solid #56663D; background: #56663D; color: #F7F1E3;' : 'border: 1px solid #A9C084; background: #FFFFFF; color: #3F5226;');
     const esSi = s.asiste === 'si';
@@ -219,8 +234,7 @@ class Component extends DCLogic {
       enviar: (e) => {
         e.preventDefault();
         if (!inv || s.enviando) return;
-        const regaloTxt = Object.keys(s.reservados).filter((k) => s.reservados[k]).map((k) => (regalos.find((r) => r.id === k) || {}).nombre).filter(Boolean).join(', ');
-        const datos = { id: inv.id, nombre: inv.nombre, asiste: esSi, personas: esSi ? cuantos : 0, total: cupos, regalo: regaloTxt };
+                const datos = { id: inv.id, nombre: inv.nombre, asiste: esSi, personas: esSi ? cuantos : 0, total: cupos };
         this.setState({ enviando: true, error: false });
         fetch(CONFIG.urlRespuestas, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(datos) })
           .then(() => this.setState({ enviando: false, enviado: true, error: false }))
