@@ -50,7 +50,7 @@ Edita `project/Main.dc.html` y publícalo con la herramienta Artifact:
 - La familia sale de `?familia=` (o `#familia=`) en el enlace; si no coincide con la hoja,
   la portada y la tarjeta muestran una lista para elegirla.
 - Confirmaciones: POST (JSON) a la aplicación web de Apps Script (prop `urlRespuestas`):
-  https://script.google.com/macros/s/AKfycbxsRnY0hBqp9HDtpA_QTv0ujj1ZtPWDC5KZxGTVx3Z3Fhc9v9dOxaot57zszWeHArSgjA/exec
+  https://script.google.com/macros/s/AKfycbzNULKIt2OstY0uC-CuDzeR-FY889Eg4iU7UBpoN_pGVzIqlyu6yENKQHXwzPSHlrxXIA/exec
   Implementada como "Ejecutar como: Yo" y acceso "Cualquier persona".
 
 ## Animaciones (todas en CSS/SMIL, sin JS de dibujo)

@@ -4,7 +4,7 @@ var CONFIG = {
   fecha: '2026-12-11T19:00:00',
   musica: '/a/vivir-mi-vida.mp3',
   hoja: '1LUQ8exWlAte9zI2oxrd9SuNDqG85873wbvX_2Z-_9fc',
-  urlRespuestas: 'https://script.google.com/macros/s/AKfycbxsRnY0hBqp9HDtpA_QTv0ujj1ZtPWDC5KZxGTVx3Z3Fhc9v9dOxaot57zszWeHArSgjA/exec'
+  urlRespuestas: 'https://script.google.com/macros/s/AKfycbzNULKIt2OstY0uC-CuDzeR-FY889Eg4iU7UBpoN_pGVzIqlyu6yENKQHXwzPSHlrxXIA/exec'
 };
 
 function idDelEnlace() {
