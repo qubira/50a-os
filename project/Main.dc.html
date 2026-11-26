@@ -505,12 +505,14 @@ class Component extends DCLogic {
       },
       noLlega: diff > 0 || !valida, yaLlego: valida && diff === 0,
       cronograma: [
-        { hora: '8:00 P. M.', titulo: 'Llegada de los invitados', detalle: 'Bienvenida y cóctel de honor' },
-        { hora: '8:45 P. M.', titulo: 'Entrada de la reina', detalle: 'Palabras y brindis real' },
-        { hora: '9:30 P. M.', titulo: 'Banquete', detalle: 'Cena servida en el gran salón' },
-        { hora: '10:30 P. M.', titulo: 'Vals real', detalle: 'La cumpleañera abre el baile' },
-        { hora: '12:00 A. M.', titulo: 'La torta encantada', detalle: 'Canto y soplado de velas' },
-        { hora: '1:00 A. M.', titulo: 'Hora loca', detalle: '¡A bailar hasta el último hechizo!' }
+        { hora: '7:00 P. M.', titulo: 'Bienvenida', detalle: 'Saludo a familiares e invitados' },
+        { hora: '8:00 P. M.', titulo: 'Entrada de la reina', detalle: 'Ingreso de la homenajeada y presentación de su corte familiar' },
+        { hora: '8:30 P. M.', titulo: 'Palabras de honor', detalle: 'Mensajes de su familia y de la cumpleañera' },
+        { hora: '9:00 P. M.', titulo: 'Brindis de honor', detalle: 'Alzamos las copas por sus 50 años' },
+        { hora: '9:15 P. M.', titulo: 'Vals de aniversario', detalle: 'Con su familia y todos sus invitados' },
+        { hora: '9:45 P. M.', titulo: '¡Rompe la piñata!', detalle: 'Y saludos y felicitaciones a la cumpleañera' },
+        { hora: '10:15 P. M.', titulo: 'Cena', detalle: 'Servida en el gran salón' },
+        { hora: '11:00 P. M.', titulo: 'Baile general', detalle: '¡A bailar hasta el último hechizo!' }
       ],
       esSi: esSi, esNo: !esSi, siStyle: opt(esSi), noStyle: opt(!esSi),
       elegirSi: () => this.setState({ asiste: 'si' }),
