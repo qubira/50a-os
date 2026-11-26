@@ -113,7 +113,7 @@ class Component extends DCLogic {
     const f = new Date(CONFIG.fecha);
     const diff = Math.max(0, f.getTime() - Date.now());
     const pad = (n) => String(n).padStart(2, '0');
-    const sep = 'display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 0 12px; ';
+    const sep = 'display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 0 clamp(7px, 3vw, 12px); min-width: 0; ';
     const cuenta = [
       [Math.floor(diff / 86400000), 'DÍAS'], [Math.floor(diff / 3600000) % 24, 'HORAS'],
       [Math.floor(diff / 60000) % 60, 'MINUTOS'], [Math.floor(diff / 1000) % 60, 'SEGUNDOS']
@@ -237,6 +237,37 @@ class Component extends DCLogic {
     };
   }
 }
+
+// Apariciones: cada bloque con .revela / .rev-* aparece al entrar en pantalla (funciona en todos los celulares).
+(function () {
+  var SEL = '.revela,.rev-izq,.rev-der,.rev-zoom,.rev-fade';
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
+    es.forEach(function (x) {
+      if (!x.isIntersecting) return;
+      var el = x.target;
+      // las tarjetas de una lista aparecen una tras otra
+      var hermanos = el.parentNode ? Array.prototype.filter.call(el.parentNode.children, function (h) { return h.matches(SEL); }) : [];
+      var i = hermanos.indexOf(el);
+      el.style.transitionDelay = (i > 0 ? Math.min(i % 4, 3) * 0.08 : 0) + 's';
+      el.classList.add('vis');
+      io.unobserve(el);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' }) : null;
+  function busca() {
+    document.querySelectorAll(SEL).forEach(function (el) {
+      if (el.__rev) return;
+      el.__rev = true;
+      if (io) io.observe(el); else el.classList.add('vis');
+    });
+  }
+  var pendiente = false;
+  new MutationObserver(function () {
+    if (pendiente) return;
+    pendiente = true;
+    requestAnimationFrame(function () { pendiente = false; busca(); });
+  }).observe(document.getElementById('app'), { childList: true, subtree: true });
+  window.addEventListener('load', busca);
+})();
 
 // La portada está dibujada a 420 × 800: se achica para que entre completa en el ancho y el alto del celular.
 (function () {

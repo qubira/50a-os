@@ -57,6 +57,14 @@ plantilla = una(plantilla, 'aria-label="Invitados de la familia"', 'aria-label="
 plantilla = una(plantilla, 'ENVIAR RESPUESTA</button>', '{{textoEnviar}}</button>')
 plantilla = una(plantilla, '¡Gracias, familia {{familia}}!', '¡Gracias, {{nombreCorto}}!')
 
+# columnas de flores a los costados: quedan detrás del texto y más angostas en celulares chicos
+for lado in ('left: 0; top: 160px', 'right: 0; transform: scaleX(-1); top: 160px'):
+    plantilla = una(plantilla, '<svg class="rev-fade" aria-hidden="true" width="70" height="300" viewBox="0 0 70 300" style="position: absolute; ' + lado,
+                    '<svg class="rev-fade pilar" aria-hidden="true" width="70" height="300" viewBox="0 0 70 300" style="pointer-events: none; position: absolute; ' + lado)
+# cuenta regresiva: números que se achican en celulares angostos para que no se corten
+plantilla = una(plantilla, '<span style="font-size: 40px; font-weight: 500; line-height: 1; color: #2F3A22">{{c.valor}}</span>',
+                '<span style="font-size: clamp(30px, 10vw, 40px); font-weight: 500; line-height: 1; color: #2F3A22">{{c.valor}}</span>')
+
 titulo = 'Invitación · 50 años de Rofelia'
 html = f'''<!doctype html>
 <html lang="es">
@@ -73,7 +81,7 @@ html = f'''<!doctype html>
 <meta property="og:url" content="https://los50derofelia.vercel.app/">
 <meta property="og:type" content="website">
 {cabeza.strip()}
-<style>#inicio{{height:calc(800px * var(--k, 1)) !important}}#inicio>div{{zoom:var(--k, 1)}}html,body{{overflow-x:hidden}}#app{{overflow-x:hidden;overflow-x:clip}}</style>
+<style>#inicio{{height:calc(800px * var(--k, 1)) !important}}#inicio>div{{zoom:var(--k, 1)}}html,body{{overflow-x:hidden}}#app{{overflow-x:hidden;overflow-x:clip}}.revela,.rev-izq,.rev-der,.rev-zoom,.rev-fade{{animation:none !important;opacity:0;transition:opacity .9s ease,transform 1s cubic-bezier(.2,.7,.2,1)}}.revela{{transform:translateY(26px)}}.rev-izq{{transform:translateX(-46px)}}.rev-der{{transform:translateX(46px)}}.rev-zoom{{transform:scale(.9)}}.revela.vis,.rev-izq.vis,.rev-der.vis,.rev-zoom.vis,.rev-fade.vis{{opacity:1;transform:none}}section:has(>.pilar)>:not(.pilar){{position:relative;z-index:1}}@media (max-width:400px){{.pilar{{width:50px;height:214px}}}}@media (prefers-reduced-motion:reduce){{.revela,.rev-izq,.rev-der,.rev-zoom,.rev-fade{{opacity:1;transform:none;transition:none}}}}</style>
 </head>
 <body>
 <div id="app"></div>
