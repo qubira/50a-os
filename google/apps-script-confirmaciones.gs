@@ -60,6 +60,6 @@ function guardar(datos) {
 // Para probar desde el editor: elige "probar" en la lista y pulsa Ejecutar.
 // Escribe en la fila N.º 1 (cámbialo si quieres) y luego vuelve a poner "Pendiente de confirmar" a mano.
 function probar() {
-  guardar({ id: '1', nombre: 'Rosella', asiste: true, personas: 1 });
-  guardar({ tipo: 'regalo', id: '1', nombre: 'Rosella', regalo: 'Perfume' });
+  guardar({ id: '1', nombre: 'ROFELIA', asiste: true, personas: 1 });
+  guardar({ tipo: 'regalo', id: '1', nombre: 'ROFELIA', regalo: 'Perfume' });
 }
