@@ -70,5 +70,6 @@ Edita `project/Main.dc.html` y publícalo con la herramienta Artifact:
   E Modalidad · F Confirmación · G Observaciones · H celular. La respuesta escribe "Confirmado – N personas" / "No asistirá"
   en F y "Respondió el". El regalo se manda aparte apenas tocan "Lo regalo" ({tipo: "regalo"}) y va a las columnas
   "Regalo" y "Regalo elegido el" (el Apps Script las crea si faltan). Al abrir, la invitación muestra el regalo ya elegido.
+- Fotos extra de los carruseles: `web/a/<marco>-<n>.jpg`, lista `EXTRA` en `herramientas/exportar_web.py` + totales en `web/logica.js` (`car`).
 - `/enviar` = lista de invitados con botón de WhatsApp y su enlace personal.
 - Probar en local: `python herramientas/servidor_local.py` → http://localhost:8940/i/1

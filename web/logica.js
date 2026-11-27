@@ -169,7 +169,7 @@ class Component extends DCLogic {
     const lugar = (n) => n + (n === 1 ? ' lugar' : ' lugares');
     const tocar = () => { this.pausadaPorUsuario = false; this.sonar(); };
     return {
-      car: Object.fromEntries(Object.entries({ retrato: 1, fiestas: 2, paseos: 2, familia: 2, hoy: 2 }).map(([n, total]) => {
+      car: Object.fromEntries(Object.entries({ retrato: 1, fiestas: 4, paseos: 5, familia: 5, hoy: 2 }).map(([n, total]) => {
         const idx = (s.carrusel && s.carrusel[n]) || 0;
         const pon = (i) => this.setState({ carrusel: Object.assign({}, this.state.carrusel || {}, { [n]: i }) });
         return [n, {

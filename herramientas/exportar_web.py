@@ -70,6 +70,23 @@ for lado in ('left: 0; top: 160px', 'right: 0; transform: scaleX(-1); top: 160px
 plantilla = una(plantilla, '<span style="font-size: 40px; font-weight: 500; line-height: 1; color: #2F3A22">{{c.valor}}</span>',
                 '<span style="font-size: clamp(30px, 10vw, 40px); font-weight: 500; line-height: 1; color: #2F3A22">{{c.valor}}</span>')
 
+# Fotos extra de los carruseles (solo en la web): archivo web/a/<marco>-<n>.jpg y su encuadre.
+# El total de fotos por marco también está en web/logica.js (car: { fiestas: 4, ... }).
+EXTRA = {
+    'fiestas': [('fiestas-3.jpg', '50% 40%'), ('fiestas-4.jpg', '50% 40%')],
+    'paseos': [('paseos-3.jpg', '50% 35%'), ('paseos-4.jpg', '50% 40%'), ('paseos-5.jpg', '50% 45%')],
+    'familia': [('familia-3.jpg', '50% 40%'), ('familia-4.jpg', '50% 40%'), ('familia-5.jpg', '50% 40%')],
+}
+SLIDE = '<div class="fx-{m}-{n}" style="flex: 0 0 100%; height: 100%; scroll-snap-align: center; scroll-snap-stop: always"></div>'
+css_extra = ''
+for marco, fotos in EXTRA.items():
+    base = len(re.findall(r'<div class="fx-' + marco + r'-\d+"', plantilla))
+    nuevas = ''.join(SLIDE.format(m=marco, n=base + i + 1) for i in range(len(fotos)))
+    plantilla = una(plantilla, SLIDE.format(m=marco, n=base), SLIDE.format(m=marco, n=base) + nuevas)
+    for i, (archivo, pos) in enumerate(fotos):
+        huella = hashlib.md5(open(os.path.join(carpeta, archivo), 'rb').read()).hexdigest()[:8]
+        css_extra += f'.fx-{marco}-{base + i + 1}{{background:#E2EBD1 url(/a/{archivo}?v={huella}) {pos}/cover no-repeat}}'
+
 titulo = 'Invitación · 50 años de Rofelia'
 html = f'''<!doctype html>
 <html lang="es">
@@ -86,7 +103,7 @@ html = f'''<!doctype html>
 <meta property="og:url" content="https://los50derofelia.vercel.app/">
 <meta property="og:type" content="website">
 {cabeza.strip()}
-<style>#inicio{{height:calc(800px * var(--k, 1)) !important}}#inicio>div{{zoom:var(--k, 1)}}html,body{{overflow-x:hidden}}#app{{overflow-x:hidden;overflow-x:clip}}.revela,.rev-izq,.rev-der,.rev-zoom,.rev-fade{{animation:none !important;opacity:0;transition:opacity .9s ease,transform 1s cubic-bezier(.2,.7,.2,1)}}.revela{{transform:translateY(26px)}}.rev-izq{{transform:translateX(-46px)}}.rev-der{{transform:translateX(46px)}}.rev-zoom{{transform:scale(.9)}}.revela.vis,.rev-izq.vis,.rev-der.vis,.rev-zoom.vis,.rev-fade.vis{{opacity:1;transform:none}}section:has(>.pilar)>:not(.pilar){{position:relative;z-index:1}}@media (max-width:400px){{.pilar{{width:50px;height:214px}}}}@media (prefers-reduced-motion:reduce){{.revela,.rev-izq,.rev-der,.rev-zoom,.rev-fade{{opacity:1;transform:none;transition:none}}}}</style>
+<style>#inicio{{height:calc(800px * var(--k, 1)) !important}}#inicio>div{{zoom:var(--k, 1)}}html,body{{overflow-x:hidden}}#app{{overflow-x:hidden;overflow-x:clip}}.revela,.rev-izq,.rev-der,.rev-zoom,.rev-fade{{animation:none !important;opacity:0;transition:opacity .9s ease,transform 1s cubic-bezier(.2,.7,.2,1)}}.revela{{transform:translateY(26px)}}.rev-izq{{transform:translateX(-46px)}}.rev-der{{transform:translateX(46px)}}.rev-zoom{{transform:scale(.9)}}.revela.vis,.rev-izq.vis,.rev-der.vis,.rev-zoom.vis,.rev-fade.vis{{opacity:1;transform:none}}section:has(>.pilar)>:not(.pilar){{position:relative;z-index:1}}@media (max-width:400px){{.pilar{{width:50px;height:214px}}}}@media (prefers-reduced-motion:reduce){{.revela,.rev-izq,.rev-der,.rev-zoom,.rev-fade{{opacity:1;transform:none;transition:none}}}}{css_extra}</style>
 </head>
 <body>
 <div id="app"></div>
