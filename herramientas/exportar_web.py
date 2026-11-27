@@ -75,7 +75,7 @@ plantilla = una(plantilla, '<span style="font-size: 40px; font-weight: 500; line
 EXTRA = {
     'fiestas': [('fiestas-3.jpg', '50% 40%'), ('fiestas-4.jpg', '50% 40%')],
     'paseos': [('paseos-3.jpg', '50% 35%'), ('paseos-4.jpg', '50% 40%'), ('paseos-5.jpg', '50% 45%')],
-    'familia': [('familia-3.jpg', '50% 40%'), ('familia-4.jpg', '50% 40%'), ('familia-5.jpg', '50% 40%')],
+    'familia': [('familia-3.jpg', '50% 40%'), ('familia-4.jpg', '50% 40%'), ('familia-5.jpg', '50% 40%'), ('familia-6.jpg', '55% 60%')],
 }
 SLIDE = '<div class="fx-{m}-{n}" style="flex: 0 0 100%; height: 100%; scroll-snap-align: center; scroll-snap-stop: always"></div>'
 css_extra = ''
